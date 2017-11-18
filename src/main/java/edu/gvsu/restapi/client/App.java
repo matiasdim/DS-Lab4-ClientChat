@@ -201,10 +201,10 @@ public class App
         }
     }
     // Update status
-    public static void updateUserStatus(PresenceService service, RegistrationInfo reg, Boolean status){
+    public static void updateUserStatus(PresenceService service, RegistrationInfo reg, Boolean newStatus){
         try {
             reg.setStatus(!reg.getStatus());
-            service.setStatus(reg.getUserName(), status);
+            service.setStatus(reg, newStatus);
         } catch (Exception e) {
             System.err.println("updateRegistrationInfo exception:");
             e.printStackTrace();

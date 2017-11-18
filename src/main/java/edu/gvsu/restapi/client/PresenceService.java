@@ -49,7 +49,7 @@ public interface PresenceService {
      * @param name The name of the user whose status is to be set.
      * @param status true if user is available, false otherwise.
      */
-    void setStatus(String userName, boolean status) throws Exception;
+    void setStatus(RegistrationInfo reg, boolean status) throws Exception;
     
     /**
      * Determine all users who are currently registered in the system.

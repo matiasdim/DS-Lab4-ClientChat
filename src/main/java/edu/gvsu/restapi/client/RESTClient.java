@@ -16,7 +16,6 @@ import org.restlet.representation.Representation;
  *
  */
 public class RESTClient implements PresenceService {
-	Vector<RegistrationInfo> users = new Vector<>();
 
 	// The base URL for all requests.
     public static final String APPLICATION_URI = "http://localhost:8080";
@@ -25,68 +24,9 @@ public class RESTClient implements PresenceService {
         super();
     }
 
-    /*
-
-    public static void main(String args[]) {
-
-
-		// EXAMPLE HTTP REQUEST #1 - Let's create a new widget!
-		// This is how you create a www form encoded entity for the HTTP POST request.
-	    Form form = new Form();
-	    form.add("name","A brand new cool widget!");
-
-	    // construct request to create a new widget resource
-	    String widgetsResourceURL = APPLICATION_URI + "/widgets";
-	    Request request = new Request(Method.POST,widgetsResourceURL);
-
-	    // set the body of the HTTP POST command with form data.
-	    request.setEntity(form.getWebRepresentation());
-
-	    // Invoke the client HTTP connector to send the POST request to the server.
-	    System.out.println("Sending an HTTP POST to " + widgetsResourceURL + ".");
-	    Response resp = new Client(Protocol.HTTP).handle(request);
-
-	    // now, let's check what we got in response.
-	    System.out.println(resp.getStatus());
-	    Representation responseData = resp.getEntity();
-	    try {
-			System.out.println(responseData.getText());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
-
 		// EXAMPLE HTTP REQUEST #2
 		// Let's do an HTTP GET of widget 1 and ask for JSON response.
-		widgetsResourceURL = APPLICATION_URI + "/widgets/5066549580791808";
-	    request = new Request(Method.GET,widgetsResourceURL);
 
-	    // We need to ask specifically for JSON
-        request.getClientInfo().getAcceptedMediaTypes().
-        add(new Preference(MediaType.APPLICATION_JSON));
-
-	    // Now we do the HTTP GET
-	    System.out.println("Sending an HTTP GET to " + widgetsResourceURL + ".");
-		resp = new Client(Protocol.HTTP).handle(request);
-
-		// Let's see what we got!
-		if(resp.getStatus().equals(Status.SUCCESS_OK)) {
-			responseData = resp.getEntity();
-			System.out.println("Status = " + resp.getStatus());
-			try {
-				String jsonString = responseData.getText().toString();
-				System.out.println("result text=" + jsonString);
-				JSONObject jObj = new JSONObject(jsonString);
-				System.out.println("id=" + jObj.getInt("id") + " name=" + jObj.getString("name"));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (JSONException je) {
-				je.printStackTrace();
-			}
-		}
 
 		// TODO: EXAMPLE HTTP REQUEST #3
 		// Do an HTTP PUT to change the name of widget 1 to "An Old Stale Widget".
@@ -99,45 +39,122 @@ public class RESTClient implements PresenceService {
 		// DO an HTTP GET for a resource with id=999.
 
 
-    }
-    */
-
 	@Override
 	public void register(RegistrationInfo reg) throws Exception {
-		boolean status = true;
-		for (RegistrationInfo register: users) {
-			if (register.getUserName().equals(reg.getUserName())){
-				status = false;
-				break;
-			}
-		}
-		if (status){
-			this.users.add(reg);
+
+		Form form = new Form();
+		form.add("userName",reg.getUserName());
+        form.add("host",reg.getHost());
+        form.add("port",Integer.toString(reg.getPort()));
+        form.add("status",Boolean.toString((reg.getStatus())));
+
+		// construct request to create a new widget resource
+		String usersResourceURL = APPLICATION_URI + "/v1/users";
+		Request request = new Request(Method.POST,usersResourceURL);
+
+		// set the body of the HTTP POST command with form data.
+		request.setEntity(form.getWebRepresentation());
+
+		// Invoke the client HTTP connector to send the POST request to the server.
+		System.out.println("Sending an HTTP POST to " + usersResourceURL + ".");
+		Response resp = new Client(Protocol.HTTP).handle(request);
+
+		// now, let's check what we got in response.
+		System.out.println(resp.getStatus());
+		Representation responseData = resp.getEntity();
+		try {
+			System.out.println(responseData.getText());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public RegistrationInfo lookup(String name) throws Exception {
-		for (RegistrationInfo register: users) {
-			if (register.getUserName().equals(name)){
-				return register;
-			}
-		}
-		return null;
+
+        String usersResourceURL = APPLICATION_URI + "/v1/users/" + name;
+        Request request = new Request(Method.GET, usersResourceURL);
+
+        // We need to ask specifically for JSON
+        request.getClientInfo().getAcceptedMediaTypes().add(new Preference(MediaType.APPLICATION_JSON));
+
+        // Now we do the HTTP GET
+        System.out.println("Sending an HTTP GET to " + usersResourceURL + ".");
+        Response resp = new Client(Protocol.HTTP).handle(request);
+
+        // Let's see what we got!
+        if(resp.getStatus().equals(Status.SUCCESS_OK)) {
+            Representation responseData = resp.getEntity();
+            try {
+                String jsonString = responseData.getText().toString();
+                System.out.println("result text=" + jsonString);
+                JSONObject jObj = new JSONObject(jsonString);
+                RegistrationInfo user = new RegistrationInfo();
+                user.setUserName(jObj.getString("userName"));
+                user.setStatus(Boolean.getBoolean(jObj.getString("status")));
+                user.setHost(jObj.getString("host"));
+                user.setPort(Integer.parseInt(jObj.getString("port")));
+                return user;
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (JSONException je) {
+                je.printStackTrace();
+            }
+        }
+        return null;
 	}
 
 	@Override
 	public void unregister(String userName) throws Exception {
-		for (int i = 0; i < users.size(); i++) {
-			if (users.get(i).getUserName().equals(userName)){
-				users.remove(i);
-			}
-		}
+        String usersResourceURL = APPLICATION_URI + "/v1/users/" + userName;
+        Request request = new Request(Method.DELETE, usersResourceURL);
+
+        // We need to ask specifically for JSON
+        request.getClientInfo().getAcceptedMediaTypes().add(new Preference(MediaType.APPLICATION_JSON));
+
+        // Now we do the HTTP DELETE
+        System.out.println("Sending an HTTP DELETE to " + usersResourceURL + ".");
+        Response resp = new Client(Protocol.HTTP).handle(request);
+
+        // now, let's check what we got in response.
+        System.out.println(resp.getStatus());
+        Representation responseData = resp.getEntity();
+        try {
+            System.out.println(responseData.getText());
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 	}
 
 	@Override
-	public void setStatus(String userName, boolean status) throws Exception {
+	public void setStatus(RegistrationInfo reg, boolean status) throws Exception {
+        Form form = new Form();
+        form.add("userName",reg.getUserName());
+        form.add("host",reg.getHost());
+        form.add("port",Integer.toString(reg.getPort()));
+        form.add("status",Boolean.toString(status));
+        String usersResourceURL = APPLICATION_URI + "/v1/users/" + reg.getUserName();
+        Request request = new Request(Method.POST,usersResourceURL);
 
+        // set the body of the HTTP POST command with form data.
+        request.setEntity(form.getWebRepresentation());
+
+        // Invoke the client HTTP connector to send the PUT request to the server.
+        System.out.println("Sending an HTTP PUT to " + usersResourceURL + ".");
+        Response resp = new Client(Protocol.HTTP).handle(request);
+
+        // now, let's check what we got in response.
+        System.out.println(resp.getStatus());
+        Representation responseData = resp.getEntity();
+        try {
+            System.out.println(responseData.getText());
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 	}
 
 	@Override
