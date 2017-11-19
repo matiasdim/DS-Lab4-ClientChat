@@ -17,8 +17,8 @@
       <file leaf-file-name="RESTClient.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/edu/gvsu/restapi/client/RESTClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+            <state relative-caret-position="207">
+              <caret line="160" column="34" lean-forward="false" selection-start-line="160" selection-start-column="28" selection-end-line="160" selection-end-column="34" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -43,6 +43,7 @@
       <find>user.setStatu</find>
       <find>lookForAUser</find>
       <find>getString</find>
+      <find>system.ou</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -152,7 +153,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.ClientMatiasdim">
+  <component name="RunManager" selected="Application.ClientJuan">
     <configuration name="ClientJuan" type="Application" factoryName="Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="edu.gvsu.restapi.client.App" />
@@ -293,12 +294,12 @@
       <option name="presentableId" value="Default" />
       <updated>1511025893509</updated>
       <workItem from="1511025895150" duration="5493000" />
-      <workItem from="1511045489793" duration="7709000" />
+      <workItem from="1511045489793" duration="8790000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13202000" />
+    <option name="totallyTimeSpent" value="14283000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="773" extended-state="6" />
@@ -417,8 +418,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/edu/gvsu/restapi/client/RESTClient.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+        <state relative-caret-position="207">
+          <caret line="160" column="34" lean-forward="false" selection-start-line="160" selection-start-column="28" selection-end-line="160" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

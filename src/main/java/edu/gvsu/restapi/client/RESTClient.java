@@ -42,18 +42,20 @@ public class RESTClient implements PresenceService {
 		request.setEntity(form.getWebRepresentation());
 
 		// Invoke the client HTTP connector to send the POST request to the server.
-		System.out.println("Sending an HTTP POST to " + usersResourceURL + ".");
+		//System.out.println("Registring user " + usersResourceURL + ".");
+        System.out.println("Registring user...");
 		Response resp = new Client(Protocol.HTTP).handle(request);
 
 		// now, let's check what we got in response.
-		System.out.println(resp.getStatus());
+		//System.out.println(resp.getStatus());
 		Representation responseData = resp.getEntity();
-		try {
-			System.out.println(responseData.getText());
-		} catch (IOException e) {
+		//try {
+			//System.out.println(responseData.getText());
+            System.out.println("User registered.");
+		//} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			//e.printStackTrace();
+		//}
 	}
 
 	@Override
@@ -66,7 +68,7 @@ public class RESTClient implements PresenceService {
         request.getClientInfo().getAcceptedMediaTypes().add(new Preference(MediaType.APPLICATION_JSON));
 
         // Now we do the HTTP GET
-        System.out.println("Sending an HTTP GET to " + usersResourceURL + ".");
+        //System.out.println("Sending an HTTP GET to " + usersResourceURL + ".");
         Response resp = new Client(Protocol.HTTP).handle(request);
 
         // Let's see what we got!
@@ -74,7 +76,7 @@ public class RESTClient implements PresenceService {
             Representation responseData = resp.getEntity();
             try {
                 String jsonString = responseData.getText().toString();
-                System.out.println("result text=" + jsonString);
+                //System.out.println("result text=" + jsonString);
                 JSONObject jObj = new JSONObject(jsonString);
                 RegistrationInfo user = new RegistrationInfo();
                 user.setUserName(jObj.getString("userName"));
@@ -101,18 +103,21 @@ public class RESTClient implements PresenceService {
         request.getClientInfo().getAcceptedMediaTypes().add(new Preference(MediaType.APPLICATION_JSON));
 
         // Now we do the HTTP DELETE
-        System.out.println("Sending an HTTP DELETE to " + usersResourceURL + ".");
+        //System.out.println("Sending an HTTP DELETE to " + usersResourceURL + ".");
         Response resp = new Client(Protocol.HTTP).handle(request);
 
         // now, let's check what we got in response.
         System.out.println(resp.getStatus());
         Representation responseData = resp.getEntity();
+        System.out.println("User unregistered.");
+        /*
         try {
-            System.out.println(responseData.getText());
+            //System.out.println(responseData.getText());
+
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }
+        }*/
 	}
 
 	@Override
@@ -129,18 +134,21 @@ public class RESTClient implements PresenceService {
         request.setEntity(form.getWebRepresentation());
 
         // Invoke the client HTTP connector to send the PUT request to the server.
-        System.out.println("Sending an HTTP PUT to " + usersResourceURL + ".");
+        //(System.out.println("Sending an HTTP PUT to " + usersResourceURL + ".");
+        System.out.println("Updating status...");
         Response resp = new Client(Protocol.HTTP).handle(request);
 
         // now, let's check what we got in response.
-        System.out.println(resp.getStatus());
+        //System.out.println(resp.getStatus());
         Representation responseData = resp.getEntity();
-        try {
-            System.out.println(responseData.getText());
+        System.out.println("Status updated");
+        /*try {
+            //System.out.println(responseData.getText());
+
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }
+        }*/
 	}
 
 	@Override
@@ -149,14 +157,15 @@ public class RESTClient implements PresenceService {
         String usersResourceURL = APPLICATION_URI + "/v1/users";
         Request request = new Request(Method.GET,usersResourceURL);
         // Invoke the client HTTP connector to send the GET request to the server.
-        System.out.println("Sending an HTTP GET to " + usersResourceURL + ".");
+        //System.out.println("Sending an HTTP GET to " + usersResourceURL + ".");
+        System.out.println("Getting users...");
         Response resp = new Client(Protocol.HTTP).handle(request);
         // Let's see what we got!
         if(resp.getStatus().equals(Status.SUCCESS_OK)) {
             Representation responseData = resp.getEntity();
             try {
                 String jsonString = responseData.getText().toString();
-                System.out.println("result text=" + jsonString);
+                //System.out.println("result text=" + jsonString);
                 JSONArray jArr = new JSONArray(jsonString);
                 RegistrationInfo[] users = new RegistrationInfo[jArr.length()];
                 for (int i = 0 ; i < jArr.length(); i++){
