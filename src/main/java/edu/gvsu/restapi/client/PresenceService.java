@@ -46,7 +46,7 @@ public interface PresenceService {
     
     /**
      * Sets the user's presence status.
-     * @param name The name of the user whose status is to be set.
+     * @param reg The user whose status is to be set.
      * @param status true if user is available, false otherwise.
      */
     void setStatus(RegistrationInfo reg, boolean status) throws Exception;

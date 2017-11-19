@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONArray;
 import org.restlet.Client;
 import org.restlet.data.*;
 import org.restlet.*;
@@ -23,21 +24,6 @@ public class RESTClient implements PresenceService {
     public RESTClient(){
         super();
     }
-
-		// EXAMPLE HTTP REQUEST #2
-		// Let's do an HTTP GET of widget 1 and ask for JSON response.
-
-
-		// TODO: EXAMPLE HTTP REQUEST #3
-		// Do an HTTP PUT to change the name of widget 1 to "An Old Stale Widget".
-
-
-		// TODO: EXAMPLE HTTP REQUEST #4
-		// Do an HTTP DELETE to delete widget 1 from the server.
-
-		// TODO: Example HTTP REQUEST #5
-		// DO an HTTP GET for a resource with id=999.
-
 
 	@Override
 	public void register(RegistrationInfo reg) throws Exception {
@@ -92,9 +78,9 @@ public class RESTClient implements PresenceService {
                 JSONObject jObj = new JSONObject(jsonString);
                 RegistrationInfo user = new RegistrationInfo();
                 user.setUserName(jObj.getString("userName"));
-                user.setStatus(Boolean.getBoolean(jObj.getString("status")));
+                user.setStatus(jObj.getBoolean("status"));
                 user.setHost(jObj.getString("host"));
-                user.setPort(Integer.parseInt(jObj.getString("port")));
+                user.setPort(jObj.getInt("port"));
                 return user;
             } catch (IOException e) {
                 // TODO Auto-generated catch block
@@ -137,9 +123,9 @@ public class RESTClient implements PresenceService {
         form.add("port",Integer.toString(reg.getPort()));
         form.add("status",Boolean.toString(status));
         String usersResourceURL = APPLICATION_URI + "/v1/users/" + reg.getUserName();
-        Request request = new Request(Method.POST,usersResourceURL);
+        Request request = new Request(Method.PUT,usersResourceURL);
 
-        // set the body of the HTTP POST command with form data.
+        // set the body of the HTTP PUT command with form data.
         request.setEntity(form.getWebRepresentation());
 
         // Invoke the client HTTP connector to send the PUT request to the server.
@@ -159,6 +145,39 @@ public class RESTClient implements PresenceService {
 
 	@Override
 	public RegistrationInfo[] listRegisteredUsers() throws Exception {
+        // construct request to create a new user resource
+        String usersResourceURL = APPLICATION_URI + "/v1/users";
+        Request request = new Request(Method.GET,usersResourceURL);
+        // Invoke the client HTTP connector to send the GET request to the server.
+        System.out.println("Sending an HTTP GET to " + usersResourceURL + ".");
+        Response resp = new Client(Protocol.HTTP).handle(request);
+        // Let's see what we got!
+        if(resp.getStatus().equals(Status.SUCCESS_OK)) {
+            Representation responseData = resp.getEntity();
+            try {
+                String jsonString = responseData.getText().toString();
+                System.out.println("result text=" + jsonString);
+                JSONArray jArr = new JSONArray(jsonString);
+                RegistrationInfo[] users = new RegistrationInfo[jArr.length()];
+                for (int i = 0 ; i < jArr.length(); i++){
+                    JSONObject jObj = new JSONObject(jArr.get(i).toString());
+                    RegistrationInfo user = new RegistrationInfo();
+                    user.setUserName(jObj.getString("userName"));
+                    user.setStatus(jObj.getBoolean("status"));
+                    user.setHost(jObj.getString("host"));
+                    user.setPort(jObj.getInt("port"));
+                    users[i] = user;
+                    user = null;
+                    jObj = null;
+                }
+                return users;
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (JSONException je) {
+                je.printStackTrace();
+            }
+        }
 		return new RegistrationInfo[0];
 	}
 }
