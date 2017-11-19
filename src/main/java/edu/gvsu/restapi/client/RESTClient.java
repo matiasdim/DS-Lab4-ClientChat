@@ -19,7 +19,7 @@ import org.restlet.representation.Representation;
 public class RESTClient implements PresenceService {
 
 	// The base URL for all requests.
-    public static final String APPLICATION_URI = "http://localhost:8080";
+    public static final String APPLICATION_URI = "http://gae-restlet-example-186301.appspot.com";
 
     public RESTClient(){
         super();

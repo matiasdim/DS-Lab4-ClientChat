@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9d8a4783-5d3f-4510-a825-b49346bf5c2e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/edu/gvsu/restapi/client/PresenceService.java" afterPath="$PROJECT_DIR$/src/main/java/edu/gvsu/restapi/client/PresenceService.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/edu/gvsu/restapi/client/RESTClient.java" afterPath="$PROJECT_DIR$/src/main/java/edu/gvsu/restapi/client/RESTClient.java" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
@@ -18,8 +17,8 @@
       <file leaf-file-name="RESTClient.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/edu/gvsu/restapi/client/RESTClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="277">
-              <caret line="166" column="47" lean-forward="false" selection-start-line="166" selection-start-column="38" selection-end-line="166" selection-end-column="47" />
+            <state relative-caret-position="225">
+              <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -153,7 +152,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.ClientJuan">
+  <component name="RunManager" selected="Application.ClientMatiasdim">
     <configuration name="ClientJuan" type="Application" factoryName="Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="edu.gvsu.restapi.client.App" />
@@ -294,12 +293,12 @@
       <option name="presentableId" value="Default" />
       <updated>1511025893509</updated>
       <workItem from="1511025895150" duration="5493000" />
-      <workItem from="1511045489793" duration="7000000" />
+      <workItem from="1511045489793" duration="7709000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12493000" />
+    <option name="totallyTimeSpent" value="13202000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="773" extended-state="6" />
@@ -418,8 +417,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/edu/gvsu/restapi/client/RESTClient.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="166" column="47" lean-forward="false" selection-start-line="166" selection-start-column="38" selection-end-line="166" selection-end-column="47" />
+        <state relative-caret-position="225">
+          <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
